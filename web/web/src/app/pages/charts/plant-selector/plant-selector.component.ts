@@ -69,6 +69,7 @@ export class PlantSelectorComponent implements OnInit {
     this.fieldsService.getFields().subscribe({
       next: this.getFields.bind(this),
     });
+    console.log(token.getPayload().subscriptionId);
   }
 
   getFields(response: ApiResponse) {

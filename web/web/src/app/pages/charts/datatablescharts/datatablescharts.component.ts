@@ -8,7 +8,7 @@ interface TreeNode<T> {
 }
 
 interface FSEntry {
- boton : string;
+ 
  fecha : Date;
  medicion : string;
  ubicacion : string;
@@ -17,13 +17,16 @@ interface FSEntry {
  id_medicion: number;
 }
 
+
+
 @Component({
   selector: 'ngx-datatablescharts',
   templateUrl: './datatablescharts.component.html',
   styleUrls: ['./datatablescharts.component.scss'],
 })
 export class DatatableschartsComponent {
-  customColumn = '-';
+  boton = "";
+  //customColumn = 'fecha';
   defaultColumns = [ 'fecha','medicion', 'ubicacion', 'especie' , 'usuario', 'id_medicion'];
   allColumns = [ this.customColumn, ...this.defaultColumns ];
 
@@ -50,13 +53,13 @@ export class DatatableschartsComponent {
 
   private data: TreeNode<FSEntry>[] = [
     {
-      data: { fecha: '01/01/2019', medicion: '5cm', ubicacion: 'porAlla', especie: 'Palta', usuario: 'Juan', id_medicion: 4 }
+      data: { fecha: new Date(), medicion: '5cm', ubicacion: 'porAlla', especie: 'Palta', usuario: 'Juan', id_medicion: 4 }
     },
     { 
-      data: { fecha: '05/01/2019', medicion: '2cm', ubicacion: 'porAca', especie: 'Palta', usuario: 'Pedro', id_medicion: 1 } 
+      data: { fecha:  new Date(), medicion: '2cm', ubicacion: 'porAca', especie: 'Palta', usuario: 'Pedro', id_medicion: 1 } 
     },
     { 
-      data: { fecha: '09/01/2019', medicion: '6cm', ubicacion: 'Entre ese y ese', especie: 'Palta', usuario: 'Diego', id_medicion: 3 }
+      data: { fecha:  new Date(), medicion: '6cm', ubicacion: 'Entre ese y ese', especie: 'Palta', usuario: 'Diego', id_medicion: 3 }
     },
   ];
 
