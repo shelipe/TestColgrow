@@ -11,6 +11,7 @@ const apiPlant = require("./app/api/plant");
 const apiSector = require("./app/api/sector");
 const apiSpecie = require("./app/api/specie");
 const apiVariety = require("./app/api/variety");
+const morgan = require("morgan");
 
 const app = express();
 app.use(bodyParser.json());
@@ -33,6 +34,10 @@ apiSector(app, db);
 apiSpecie(app, db);
 apiVariety(app, db);
 
+//Middlesware
+app.use(morgan('start'));
+
 db.sequelize.sync().then(() => {
   app.listen(3002, () => console.log("App listening on port 3002!"));
 });
+
