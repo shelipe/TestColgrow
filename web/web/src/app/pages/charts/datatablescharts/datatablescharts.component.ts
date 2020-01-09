@@ -9,7 +9,7 @@ interface TreeNode<T> {
 
 interface FSEntry {
  boton : string;
- fecha : "short";
+ fecha : Date;
  medicion : string;
  ubicacion : string;
  especie: string;
