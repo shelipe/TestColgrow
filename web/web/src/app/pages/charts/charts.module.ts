@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ChartModule } from 'angular2-chartjs';
+
 import { NbCardModule, NbDatepickerModule, NbStepperModule, NbSelectModule, NbButtonModule,  NbTreeGridModule, } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -13,7 +14,14 @@ import { TreeGreedLeftChartComponent } from './tree-greed-left-chart/tree-greed-
 import {MatTableModule} from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon'
 import { from } from 'rxjs';
+import { HectaresComponent } from './hectares/hectares.component';
+import { NgChartjsModule } from 'ng-chartjs';
+// For MDB Angular Free
+
+
 
 
 
@@ -23,6 +31,7 @@ const components = [
   PlantSelectorComponent,
   DatatableschartsComponent,
   TreeGreedLeftChartComponent,
+  HectaresComponent
 ];
 
 @NgModule({
@@ -40,8 +49,11 @@ const components = [
     NbTreeGridModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule 
+    MatTableModule,
+    MatTreeModule,
+    MatIconModule,
+    NgChartjsModule
   ],
-  declarations: [...routedComponents, ...components],
+  declarations: [...routedComponents, ...components, ],
 })
 export class ChartsModule {}

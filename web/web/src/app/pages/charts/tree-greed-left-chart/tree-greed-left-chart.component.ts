@@ -1,68 +1,73 @@
 import { Component } from '@angular/core';
-import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
+import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+import {FlatTreeControl} from '@angular/cdk/tree';
 
-interface TreeNode<T> {
-  data: T;
-  children?: TreeNode<T>[];
-  expanded?: boolean;
+interface FoodNode {
+  name: string;
+  children?: FoodNode[];
 }
 
-interface FSEntry {
-  campo: string;
-  sector: string;
-  frutos: string;
-  items?: number;
+const TREE_DATA: FoodNode[] = [
+  {
+    name: 'Fruit',
+    children: [
+      {name: 'Apple'},
+      {name: 'Banana'},
+      {name: 'Fruit loops'},
+    ]
+  }, {
+    name: 'Vegetables',
+    children: [
+      {
+        name: 'Green',
+        children: [
+          {name: 'Broccoli'},
+          {name: 'Brussel sprouts'},
+        ]
+      }, {
+        name: 'Orange',
+        children: [
+          {name: 'Pumpkins'},
+          {name: 'Carrots'},
+        ]
+      },
+    ]
+  },
+];
+
+/** Flat node with expandable and level information */
+interface ExampleFlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
 }
+
 @Component({
   selector: 'ngx-tree-greed-left-chart',
   templateUrl: './tree-greed-left-chart.component.html',
   styleUrls: ['./tree-greed-left-chart.component.scss']
 })
 export class TreeGreedLeftChartComponent  {
-  allColumns = [ 'campo', 'sector', 'frutos', 'items' ];
-  
+  private _transformer = (node: FoodNode, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      level: level,
+    };
+  }
 
-  data: TreeNode<FSEntry>[] = [
-    {
-      data: { campo: 'Projects', sector: '1.8 MB', items: 5, frutos: 'dir' },
-      children: [
-        { data: { campo: 'project-1.doc', frutos: 'doc', sector: '240 KB' } },
-        { data: { campo: 'project-2.doc', frutos: 'doc', sector: '290 KB' } },
-        {
-          data: { campo: 'project-3', frutos: 'dir', sector: '466 KB', items: 3 },
-          children: [
-            { data: { campo: 'project-3A.doc', frutos: 'doc', sector: '200 KB' } },
-            { data: { campo: 'project-3B.doc', frutos: 'doc', sector: '266 KB' } },
-            { data: { campo: 'project-3C.doc', frutos: 'doc', sector: '0' } },
-          ],
-        },
-        { data: { campo: 'project-4.docx', frutos: 'docx', sector: '900 KB' } },
-      ],
-    },
-    {
-      data: { campo: 'Reports', frutos: 'dir', sector: '400 KB', items: 2 },
-      children: [
-        {
-          data: { campo: 'Report 1', frutos: 'dir', sector: '100 KB', items: 1 },
-          children: [
-            { data: { campo: 'report-1.doc', frutos: 'doc', sector: '100 KB' } },
-          ],
-        },
-        {
-          data: { campo: 'Report 2', frutos: 'dir', sector: '300 KB', items: 2 },
-          children: [
-            { data: { campo: 'report-2.doc', frutos: 'doc', sector: '290 KB' } },
-            { data: { campo: 'report-2-note.txt', frutos: 'txt', sector: '10 KB' } },
-          ],
-        },
-      ],
-    },
-    {
-      data: { campo: 'Other', frutos: 'dir', sector: '109 MB', items: 2 },
-      children: [
-        { data: { campo: 'backup.bkp', frutos: 'bkp', sector: '107 MB' } },
-        { data: { campo: 'secret-note.txt', frutos: 'txt', sector: '2 MB' } },
-      ],
-    },
-  ];
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+      node => node.level, node => node.expandable);
+
+  treeFlattener = new MatTreeFlattener(
+      this._transformer, node => node.level, node => node.expandable, node => node.children);
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+  constructor() {
+    this.dataSource.data = TREE_DATA;
+  }
+
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  
 }
