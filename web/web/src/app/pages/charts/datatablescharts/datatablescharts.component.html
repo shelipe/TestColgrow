@@ -1,37 +1,29 @@
-<nb-card>
-  <nb-card-body>
-    
-    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" equalColumnsWidth>
-
-      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
-      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
-
-      <ng-container [nbTreeGridColumnDef]="customColumn">
-
-        <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef nbSortHeader>
-         
-          {{customColumn}}
-          <span *nbSortHeaderIcon="let asc = isAscending; let desc = isDescending">
-            <span *ngIf="asc" class="nb-chevron-down" aria-label="sorted ascending"></span>
-            <span *ngIf="desc" class="nb-chevron-up" aria-label="sorted descending"></span>
-          </span>
-        </th>
+<div>
+   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+   
+      <ng-container matColumnDef="id">
+           <th mat-header-cell *matHeaderCellDef> id </th>
+           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
         
-
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">
-          <button nbButton size="medium">+</button>
-         
-          {{row.data.name}}
-        </td>
-
+        <ng-container matColumnDef="ecuatorial_length">
+         <th mat-header-cell *matHeaderCellDef> Ecuatorial </th>
+         <td mat-cell *matCellDef="let element"> {{element.ecuatorial_length}} </td>
       </ng-container>
-
-      <ng-container *ngFor="let column of defaultColumns" [nbTreeGridColumnDef]="column">
-        <th nbTreeGridHeaderCell *nbTreeGridHeaderCellDef>{{column}}</th>
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column]}}</td>
+   
+      <ng-container matColumnDef="polar_length">
+         <th mat-header-cell *matHeaderCellDef> Polar </th>
+         <td mat-cell *matCellDef="let element"> {{element.polar_length}} </td>
       </ng-container>
-
-    </table>
-
-  </nb-card-body>
-</nb-card>
+   
+      <ng-container matColumnDef="fruitId">
+         <th mat-header-cell *matHeaderCellDef> Fuit Id </th>
+         <td mat-cell *matCellDef="let element"> {{element.fruitId}} </td>
+      </ng-container>
+        
+       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+   
+   </table> 
+   <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+</div>

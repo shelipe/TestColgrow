@@ -10,6 +10,12 @@ import { PlantSelectorComponent } from './plant-selector/plant-selector.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatatableschartsComponent } from './datatablescharts/datatablescharts.component';
 import { TreeGreedLeftChartComponent } from './tree-greed-left-chart/tree-greed-left-chart.component';
+import {MatTableModule} from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { from } from 'rxjs';
+
+
 
 
 const components = [
@@ -32,6 +38,9 @@ const components = [
     NbSelectModule,
     NbButtonModule,
     NbTreeGridModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule 
   ],
   declarations: [...routedComponents, ...components],
 })

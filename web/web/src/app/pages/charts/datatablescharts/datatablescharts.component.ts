@@ -1,74 +1,32 @@
-import { Component, Input } from '@angular/core';
-import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
-
-interface TreeNode<T> {
-  data: T;
-  children?: TreeNode<T>[];
-  expanded?: boolean;
-}
-
-interface FSEntry {
- 
- fecha : Date;
- medicion : string;
- ubicacion : string;
- especie: string;
- usuario : string;
- id_medicion: number;
-}
-
-
+import { Component, OnInit,Input, ViewChild,AfterViewInit  } from '@angular/core';
+import { MatTableDataSource,  MatTable, MatSort} from '@angular/material';
+import { MatPaginator } from '@angular/material';
+/*SERVICES*/
+import { MeasurementsService } from '../../../@core/api/measurements.service';
+/*MODELS*/
+import { Field, Sector, Plant, Fruit, ApiResponse, Measurement } from '../../../@core/api/models';
 
 @Component({
   selector: 'ngx-datatablescharts',
   templateUrl: './datatablescharts.component.html',
   styleUrls: ['./datatablescharts.component.scss'],
 })
-export class DatatableschartsComponent {
-  boton = "";
-  //customColumn = 'fecha';
-  defaultColumns = [ 'fecha','medicion', 'ubicacion', 'especie' , 'usuario', 'id_medicion'];
-  allColumns = [ this.customColumn, ...this.defaultColumns ];
+export class DatatableschartsComponent implements OnInit, AfterViewInit{
+  displayedColumns: string[] = ['id','ecuatorial_length','polar_length','fruitId'];
+  dataSource = new MatTableDataSource();
 
-  dataSource: NbTreeGridDataSource<FSEntry>;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  
+  constructor(private measurementsService: MeasurementsService){  }
 
-  sortColumn: string;
-  sortDirection: NbSortDirection = NbSortDirection.NONE;
-
-  constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
-    this.dataSource = this.dataSourceBuilder.create(this.data);
+  ngOnInit() {
+    //this.measurementsService.getMeasurements().subscribe(Response => console.log('measurements',Response.payload));
+    this.measurementsService.getMeasurements().subscribe(Response => (this.dataSource.data = Response.payload));
   }
 
-  updateSort(sortRequest: NbSortRequest): void {
-    this.sortColumn = sortRequest.column;
-    this.sortDirection = sortRequest.direction;
-  }
-
-  getSortDirection(column: string): NbSortDirection {
-    if (this.sortColumn === column) {
-      return this.sortDirection;
-    }
-    return NbSortDirection.NONE;
-  }
-
-  private data: TreeNode<FSEntry>[] = [
-    {
-      data: { fecha: new Date(), medicion: '5cm', ubicacion: 'porAlla', especie: 'Palta', usuario: 'Juan', id_medicion: 4 }
-    },
-    { 
-      data: { fecha:  new Date(), medicion: '2cm', ubicacion: 'porAca', especie: 'Palta', usuario: 'Pedro', id_medicion: 1 } 
-    },
-    { 
-      data: { fecha:  new Date(), medicion: '6cm', ubicacion: 'Entre ese y ese', especie: 'Palta', usuario: 'Diego', id_medicion: 3 }
-    },
-  ];
-
-  getShowOn(index: number) {
-    const minWithForMultipleColumns = 400;
-    const nextColumnStep = 100;
-    return minWithForMultipleColumns + (nextColumnStep * index);
+  ngAfterViewInit(){
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }
-
-
-  
