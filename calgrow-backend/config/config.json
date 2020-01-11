@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "",
+    "password": "dulcita190407",
     "database": "calgrow_app_dev",
     "host": "127.0.0.1:3307",
     "dialect": "mysql",
@@ -9,21 +9,21 @@
     "port":3307
   },
   "test": {
-    "username": "root",
-    "password": "",
+    "username": "calgrow_admin",
+    "password": "V0n,^a.O]P!;q~eqG[",
     "database": "calgrow_measurements",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false,
-    "port":3306
+    "port":3307
   },
   "production": {
-    "username": "root",
-    "password": "",
+    "username": "calgrow_admin",
+    "password": "V0n,^a.O]P!;q~eqG[",
     "database": "calgrow_measurements",
     "host": "localhost",
     "dialect": "mysql",
     "operatorsAliases": false,
-    "port":3306
+    "port":3307
   }
 }
