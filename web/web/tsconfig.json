@@ -4,8 +4,8 @@
     "importHelpers": true,
     "module": "esnext",
     "outDir": "./dist/out-tsc",
-    "types": [
-      "googlemaps"
+    "types": ["jasmine",
+     "googlemaps"
     ],
     "sourceMap": true,
     "declaration": false,

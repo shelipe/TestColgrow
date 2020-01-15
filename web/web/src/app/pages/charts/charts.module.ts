@@ -15,10 +15,10 @@ import {MatTableModule} from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTreeModule } from '@angular/material/tree';
-import { MatIconModule } from '@angular/material/icon'
-import { from } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
-import { NgChartjsModule } from 'ng-chartjs';
+
+import { from } from 'rxjs';
 // For MDB Angular Free
 
 
@@ -52,7 +52,8 @@ const components = [
     MatTableModule,
     MatTreeModule,
     MatIconModule,
-    NgChartjsModule
+   
+    
   ],
   declarations: [...routedComponents, ...components, ],
 })
